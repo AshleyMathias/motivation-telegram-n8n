@@ -1,0 +1,104 @@
+{
+  "name": "DailyMotivationBot(Telegram)",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "hours"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        0,
+        0
+      ],
+      "id": "593ec3bd-a867-4e7f-8a76-0c21e6deb6f2",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "url": "https://api.quotable.io/random",
+        "options": {
+          "allowUnauthorizedCerts": true,
+          "response": {
+            "response": {
+              "fullResponse": "=",
+              "responseFormat": "json"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        220,
+        0
+      ],
+      "id": "07fa3842-26e0-420d-afd3-350c500e39f3",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "chatId": "5625894298",
+        "text": "={{$json[\"content\"]}}  \n— {{$json[\"author\"]}}\n",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        440,
+        0
+      ],
+      "id": "73d00b46-2422-4ea6-a035-0103528b227a",
+      "name": "Telegram",
+      "webhookId": "eb0e6004-f61c-4512-a24f-d9259282747c",
+      "credentials": {
+        "telegramApi": {
+          "id": "Vaa5nC77g5AAy2Wv",
+          "name": "Telegram account 2"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Telegram",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "f1a449a2-efd7-4d86-bfce-88f76f897e88",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "8165fdb40026658032009a0d1fa4414c8a803bca194bfbf9c9bd83390f574456"
+  },
+  "id": "Zb6g7w7wsCrT0K6D",
+  "tags": []
+}
